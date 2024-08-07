@@ -1,9 +1,9 @@
-const db = require('../models');
-const account = require('../models/account');
+import { Account as _Account } from '../models';
+import account, { balance as _balance, save } from '../models/account';
 
-const Account = db.Account;
+const Account = _Account;
 
-exports.getAccount = async (req, res) => {
+export async function getAccount(req, res) {
     try {
         const account = await Account.findOne({ where: {
             userId: req.userId } });
@@ -15,9 +15,9 @@ exports.getAccount = async (req, res) => {
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-};
+}
 
-exports.deposit = async (req, res) => {
+export async function deposit(req, res) {
     try {
         const { amount } = req.body;
         const account = await Account.findOne({ where: {
@@ -33,16 +33,19 @@ exports.deposit = async (req, res) => {
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-};
+}
 
-exports.withdraw = async (req, res) => {
+export async function withdraw(req, res) {
     try {
         const { amount } = req.body;
         const account = await Account.findOne({ where: {
             userId: req.userId } });
+    
+    if (!account) {
+        return res.status(404).send({ message: 'Account not found!' });
     }
 
-    if (account.balance  < amount) {
+    if (account.balance < amount) {
         return res.status(400).send({ message: 'OOps! Sorry, Insufficient Funds!' });
     }
 
@@ -50,6 +53,7 @@ exports.withdraw = async (req, res) => {
     await account.save();
     res.status(200).send({ message: 'Withdrawal successful!',
         balance: account.balance });
-    } catch (err) {
+    }  catch (err) {
         res.status(500).send({ message: err.message });
     }
+};

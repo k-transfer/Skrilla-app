@@ -42,7 +42,7 @@ exports.withdraw = async (req, res) => {
             userId: req.userId } });
     }
 
-    catch (account) < amount; {
+    if (account.balance  < amount) {
         return res.status(400).send({ message: 'OOps! Sorry, Insufficient Funds!' });
     }
 
@@ -50,9 +50,6 @@ exports.withdraw = async (req, res) => {
     await account.save();
     res.status(200).send({ message: 'Withdrawal successful!',
         balance: account.balance });
-    }; try {
-        const { amount } = req.body;
-        const account = await Account.findOne({ where: {
-            userId: req.balance } });
+    } catch (err) {
         res.status(500).send({ message: err.message });
-    };
+    }

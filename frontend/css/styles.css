@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color:aqua;
+}
+
+/*App*/
+
+#app {
+background-color:aqua;
+padding: 20px;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(2, 4, 2, 0.1);
+}

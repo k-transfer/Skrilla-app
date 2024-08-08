@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:3000/Skrilla-app', {
 .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
-    res.send("Welcome!");
+    res.send("Welcome! Thank you for Choosing Skrilla Transfer!");
 });
 
 app.listen(port, () => {

@@ -1,7 +1,7 @@
-const User = require('../models/user');
+import User, { findOne } from '../models/user';
 
 // Register a new user
-exports.register = async (req, res) => {
+export async function register(req, res) {
     try {
         const { name, email. password } = req.body;
         const user = new User({ name, email, password });
@@ -10,24 +10,24 @@ exports.register = async (req, res) => {
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
-};
+}
 
 // Login in user logic
-exports.login = async (req, res) => }
+export async function login(req, res){ return ; } }
 try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email, password });
+    const user = await findOne({ email, password });
     if (!user) {
         return res.status(400).json({ error: err.message });
     }
-};
+}
 
 // Transfer Money
-exports.transfer = async (req, res) => {
+export async function transfer(req, res) {
     try {
         const { fromEmail, toEmail, amount } = req.body;
-        const fromUser = await User.findOne({ email: fromEmail });
-        const toUser = await User.findOne({ email: toEmail });
+        const fromUser = await findOne({ email: fromEmail });
+        const toUser = await findOne({ email: toEmail });
 
         if (!fromUser || !toUser) {
             return res.status(404).json({ error: 'User not found!' });
@@ -47,4 +47,4 @@ exports.transfer = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-};
+}

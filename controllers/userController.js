@@ -13,7 +13,7 @@ export async function register(req, res) {
 }
 
 // Login in user logic
-export async function login(req, res){ return ; } }
+export async function login(req, res){ return ; }
 try {
     const { email, password } = req.body;
     const user = await findOne({ email, password });
@@ -23,28 +23,28 @@ try {
 }
 
 // Transfer Money
-export async function transfer(req, res) {
+exports.transfer = async (req, res) => {
     try {
-        const { fromEmail, toEmail, amount } = req.body;
-        const fromUser = await findOne({ email: fromEmail });
-        const toUser = await findOne({ email: toEmail });
-
-        if (!fromUser || !toUser) {
-            return res.status(404).json({ error: 'User not found!' });
-        }
-
-        if (fromUser.balance < amount) {
-            return res.status(400).json({ error: 'Insufficient funds!' });
-        }
-
-        fromUser.balance -= amount;
-        toUser.balance += amount;
-
-        await fromUser.save();
-        await toUser.save();
-
-        res.status(200).json({ message: 'Transfer was successful!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+      const { fromEmail, toEmail, amount } = req.body;
+      const fromUser = await User.findOne({ email: fromEmail });
+      const toUser = await User.findOne({ email: toEmail });
+  
+      if (!fromUser || !toUser) {
+        return res.status(404).json({ error: 'User not found' });
 }
+
+if (fromUser.balance < amount) {
+  return res.status(400).json({ error: 'Insufficient funds' });
+}
+
+fromUser.balance -= amount;
+toUser.balance += amount;
+
+await fromUser.save();
+await toUser.save();
+
+res.status(200).json({ message: 'Transfer successful' });
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+};

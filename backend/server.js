@@ -1,19 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const RateLimit = require('express-rate-limit');
 const db = require('./models');
+const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const accountRoutes = require('./routes/accountRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoutes');
+
 
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/account', accountRoutes);
-app.use('/api/transactions', transactionRoutes);
+// Setup rate limiter: amount of requests per minute
+const limiter = RateLimit({
+    windowMS: 15 * 60 * 1000, // 15 minutes
+    max: 60, // max 60 requests per WindowMs
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
+
+app.get('/:path', function(req, res) {
+    let path = req.params.path;
+    if (isValidPath(path))
+        res.sendFile(path);
+});
+
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -28,10 +43,13 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/account', accountRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // MongoDB connection
 
-mongoose.connect('mongodb://localhost:3000/Skrilla-app', {
+mongoose.connect('mongodb:https://github.com/k-transfer/Skrilla-app.git', {
     userNewUrlParser: true,
     useUnifiedTopology: true,
 })

@@ -6,7 +6,7 @@ import { initiateDownload } from 'download-manager';
 BarcodeScanner.scan()
 .then(data => {
     if (data.isValid) {
-        initiateDownload(data.*./applink); 
+        initiateDownload(data/applink); 
     } else {
         alert('Invalid barcode!');
     }

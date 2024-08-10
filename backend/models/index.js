@@ -21,4 +21,6 @@ db.Account.hasMany(db.Transaction, {
     as: 'sentTransactions', foreignKey: 'senderId' });
 db.Account.hasMany(db.Transaction, {
     as: 'recievedTransactions', foreignKey: 'recieverId' });
-module.exports = db;
+
+
+    module.exports = db;

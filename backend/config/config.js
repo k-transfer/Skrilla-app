@@ -1,4 +1,4 @@
 module.exports = {
     secret: '',
-    databaseUrl: ''
+    databaseUrl: 'https://github.com/k-transfer/Skrilla-app.git'
 };

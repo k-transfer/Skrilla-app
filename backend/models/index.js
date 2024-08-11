@@ -1,9 +1,12 @@
 const { Sequelize } = require('sequelize');
 const config = require('../config/config');
+const { stringify } = require('querystring');
 
-const sequelize = new Sequelize(config.databaseUrl, {
-    dialect: 'https://github.com/k-transfer/Skrilla-app.git',
-});
+
+const sequelize = new Sequelize(config.databaseUrl, 'https://github.com/k-transfer/Skrilla-app.git', 
+    'John', 'Doee', {});
+    import Sequelize from 'sequelize';
+
 
 const db = {};
 db.Sequelize = Sequelize;
@@ -12,7 +15,7 @@ db.sequelize = sequelize;
 // Import models
 db.User = require('./user')(sequelize, Sequelize);
 db.Account = require('./account')(sequelize, Sequelize);
-db.Transaction = require('./transaction')(sequelize, Sequalize);
+db.Transaction = require('./transaction')(sequelize, Sequelize);
 
 // Associations
 db.User.hasOne(db.Account);
